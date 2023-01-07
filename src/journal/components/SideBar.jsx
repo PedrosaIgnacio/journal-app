@@ -4,18 +4,15 @@ import {
     Divider,
     Drawer,
     List,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
     Toolbar,
     Typography,
-    Grid,
 } from "@mui/material";
-import { TurnedInNot } from "@mui/icons-material";
 import { useSelector } from "react-redux";
+import { SideBarItem } from "./SideBarItem";
+
 export const SideBar = ({ drawerWidth = 240 }) => {
     const { displayName } = useSelector((state) => state.auth);
+    const { notes } = useSelector((state) => state.journal);
 
     return (
         <Box
@@ -41,29 +38,11 @@ export const SideBar = ({ drawerWidth = 240 }) => {
                 </Toolbar>
                 <Divider />
                 <List>
-                    {["Enero", "Febrero", "Marzo", "Abril"].map(
-                        (text) => {
-                            return (
-                                <ListItem key={text} disablePadding>
-                                    <ListItemButton>
-                                        <ListItemIcon>
-                                            <TurnedInNot />
-                                        </ListItemIcon>
-                                        <Grid container>
-                                            <ListItemText
-                                                primary={text}
-                                            />
-                                            <ListItemText
-                                                secondary={
-                                                    "Exercitation dolor culpa eiusmod do deserunt sint."
-                                                }
-                                            />
-                                        </Grid>
-                                    </ListItemButton>
-                                </ListItem>
-                            );
-                        }
-                    )}
+                    {notes.map((note) => {
+                        return (
+                            <SideBarItem key={note.id} {...note} />
+                        );
+                    })}
                 </List>
             </Drawer>
         </Box>
